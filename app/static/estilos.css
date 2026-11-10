@@ -1,0 +1,172 @@
+/* ClasificaIA · estilos del panel. Colores como variables: modo claro y oscuro. */
+:root {
+  --fondo: #f3f5f9;
+  --tarjeta: #ffffff;
+  --texto: #1d2433;
+  --suave: #5f6b7e;
+  --borde: #e1e6ee;
+  --acento: #3f5bd9;
+  --acento-suave: #e8ecfd;
+  --ok: #1f9d6b;
+  --error: #c8433b;
+  --sombra: 0 1px 2px rgba(20, 30, 50, .06), 0 4px 16px rgba(20, 30, 50, .06);
+  /* Un color por clase de flor */
+  --setosa: #3f5bd9;
+  --versicolor: #e08a1e;
+  --virginica: #9b4dca;
+  --radio: 14px;
+  --sobre-acento: #ffffff;   /* texto sobre colores fuertes */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #11151d;
+    --tarjeta: #1a202b;
+    --texto: #e7ebf3;
+    --suave: #98a3b6;
+    --borde: #2a3242;
+    --acento: #7d93ff;
+    --acento-suave: #232c47;
+    --sombra: 0 1px 2px rgba(0, 0, 0, .3);
+    --setosa: #7d93ff;
+    --versicolor: #f0a64a;
+    --virginica: #c08ae6;
+    --sobre-acento: #10141c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.45;
+}
+
+/* ---------- Barra superior ---------- */
+.barra {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem clamp(1rem, 4vw, 2.5rem);
+  background: var(--tarjeta);
+  border-bottom: 1px solid var(--borde);
+  position: sticky; top: 0; z-index: 10;
+}
+.marca { display: flex; align-items: center; gap: .75rem; }
+.logo {
+  display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px;
+  background: var(--acento-suave); color: var(--acento); font-size: 1.4rem;
+}
+.barra h1 { margin: 0; font-size: 1.25rem; }
+.sub { margin: 0; color: var(--suave); font-size: .85rem; }
+
+.estado {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .35rem .8rem; border-radius: 999px;
+  border: 1px solid var(--borde); font-size: .85rem; color: var(--suave);
+}
+.punto { width: 9px; height: 9px; border-radius: 50%; background: var(--suave); }
+.estado.ok .punto { background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 25%, transparent); }
+.estado.caido .punto { background: var(--error); }
+
+/* ---------- Rejilla del panel ---------- */
+.panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  padding: 1.5rem clamp(1rem, 4vw, 2.5rem);
+  max-width: 1200px; margin: 0 auto;
+}
+.kpis, .ancha { grid-column: 1 / -1; }
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
+.kpi {
+  background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio);
+  box-shadow: var(--sombra); padding: 1rem 1.2rem;
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.kpi-et { color: var(--suave); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+.kpi strong { font-size: 1.6rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.tarjeta {
+  background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio);
+  box-shadow: var(--sombra); padding: 1.25rem 1.4rem; min-width: 0;
+}
+.tarjeta h2 { margin: 0 0 1rem; font-size: 1.05rem; }
+.tarjeta-cab { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tarjeta-cab h2 { margin: 0; }
+.nota { margin: -.5rem 0 1rem; color: var(--suave); font-size: .85rem; }
+
+/* ---------- Formulario ---------- */
+.campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem 1rem; }
+label { display: flex; flex-direction: column; gap: .3rem; font-size: .88rem; color: var(--suave); }
+input {
+  font: inherit; color: var(--texto); background: var(--fondo);
+  border: 1px solid var(--borde); border-radius: 10px; padding: .6rem .75rem;
+}
+input:focus { outline: 2px solid var(--acento); outline-offset: 1px; }
+input:invalid { border-color: var(--error); }
+.rango { font-size: .75rem; color: var(--suave); }
+
+button { font: inherit; cursor: pointer; }
+.primario {
+  margin-top: 1.1rem; width: 100%; padding: .75rem; border: 0; border-radius: 10px;
+  background: var(--acento); color: var(--sobre-acento); font-weight: 600;
+}
+.primario:disabled { opacity: .6; cursor: wait; }
+.chip {
+  padding: .3rem .8rem; border-radius: 999px; border: 1px solid var(--borde);
+  background: var(--fondo); color: var(--texto); font-size: .82rem;
+}
+.chip:hover { border-color: var(--acento); color: var(--acento); }
+.ejemplos { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+/* ---------- Resultado ---------- */
+#resultado { margin-bottom: 1rem; }
+#resultado.vacio { color: var(--suave); }
+.prediccion { display: flex; align-items: baseline; gap: .75rem; flex-wrap: wrap; }
+.prediccion .clase { font-size: 2rem; font-weight: 700; text-transform: capitalize; }
+.prediccion .conf { color: var(--suave); }
+.error { color: var(--error); }
+
+.barras { display: flex; flex-direction: column; gap: .6rem; }
+.barra-fila { display: grid; grid-template-columns: 90px 1fr 64px; align-items: center; gap: .6rem; font-size: .88rem; }
+.barra-fila .nombre { text-transform: capitalize; }
+.pista { height: 12px; background: var(--fondo); border-radius: 999px; overflow: hidden; border: 1px solid var(--borde); }
+.relleno { height: 100%; border-radius: 999px; transition: width .4s ease; }
+.barra-fila .valor { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- Tablas ---------- */
+.tabla-envoltura { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { padding: .55rem .6rem; text-align: left; border-bottom: 1px solid var(--borde); }
+th { color: var(--suave); font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; }
+.sin-datos td { color: var(--suave); text-align: center; }
+.etiqueta {
+  display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .8rem;
+  text-transform: capitalize; color: var(--sobre-acento);
+}
+
+/* ---------- Matriz de confusión ---------- */
+.matriz { display: grid; gap: 4px; font-size: .82rem; }
+.celda {
+  display: grid; place-items: center; min-height: 52px; border-radius: 8px;
+  font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.encabezado { color: var(--suave); font-weight: 600; text-transform: capitalize; min-height: 32px; }
+
+/* ---------- Pie ---------- */
+.pie { text-align: center; color: var(--suave); font-size: .82rem; padding: 1rem 1rem 2rem; }
+.pie a { color: var(--acento); }
+
+/* ---------- Pantallas pequeñas ---------- */
+@media (max-width: 860px) {
+  .panel { grid-template-columns: minmax(0, 1fr); }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .campos { grid-template-columns: 1fr; }
+  .estado #estado-texto { display: none; }
+  .kpi strong { font-size: 1.25rem; }
+}

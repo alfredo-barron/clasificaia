@@ -1,0 +1,12 @@
+.git
+.venv
+__pycache__
+infra
+tests
+*.tfstate*
+.env
+.DS_Store
+.github
+docker-compose.yml
+k8s
+README.md

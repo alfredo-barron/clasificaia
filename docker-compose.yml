@@ -1,0 +1,23 @@
+# ClasificaIA: despliegue local con Docker Compose
+#   docker compose up -d --build     -> http://localhost:8000  (panel)  y  /docs (API)
+#   docker compose logs -f api       -> ver los registros
+#   docker compose down              -> detener y borrar el contenedor
+services:
+  api:
+    build: .                       # usa el Dockerfile de esta carpeta (entrena el modelo al construir)
+    image: clasificaia:local
+    container_name: clasificaia
+    ports:
+      - "${PUERTO:-8000}:8000"     # cambia el puerto de tu máquina con PUERTO=8080 docker compose up -d
+    restart: unless-stopped
+    healthcheck:                   # el mismo /health que usa Kubernetes
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:                    # mismos límites que k8s/app.yaml
+          cpus: "0.5"
+          memory: 256M

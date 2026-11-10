@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ClasificaIA · Panel</title>
+  <link rel="stylesheet" href="/static/estilos.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="marca">
+      <span class="logo" aria-hidden="true">✿</span>
+      <div>
+        <h1>ClasificaIA</h1>
+        <p class="sub">Clasificación de flores Iris</p>
+      </div>
+    </div>
+    <div class="estado" id="estado" title="Estado del servicio (/health)">
+      <span class="punto"></span><span id="estado-texto">Conectando…</span>
+    </div>
+  </header>
+
+  <main class="panel">
+    <!-- ===================== Indicadores ===================== -->
+    <section class="kpis" aria-label="Indicadores del modelo">
+      <article class="kpi"><span class="kpi-et">Exactitud (prueba)</span><strong id="kpi-exactitud">—</strong></article>
+      <article class="kpi"><span class="kpi-et">Validación cruzada</span><strong id="kpi-cv">—</strong></article>
+      <article class="kpi"><span class="kpi-et">Datos entren. / prueba</span><strong id="kpi-datos">—</strong></article>
+      <article class="kpi"><span class="kpi-et">Versión del modelo</span><strong id="kpi-version">—</strong></article>
+    </section>
+
+    <!-- ===================== Clasificar ===================== -->
+    <section class="tarjeta">
+      <div class="tarjeta-cab">
+        <h2>Clasificar una flor</h2>
+        <div class="ejemplos" role="group" aria-label="Cargar un ejemplo">
+          <button type="button" class="chip" data-ej="setosa">Setosa</button>
+          <button type="button" class="chip" data-ej="versicolor">Versicolor</button>
+          <button type="button" class="chip" data-ej="virginica">Virginica</button>
+        </div>
+      </div>
+      <form id="form">
+        <div class="campos">
+          <label>Largo del sépalo (cm)
+            <input name="largo_sepalo" type="number" step="0.1" min="0.1" max="9.9" value="5.1" required>
+            <small class="rango" data-rango="largo_sepalo"></small>
+          </label>
+          <label>Ancho del sépalo (cm)
+            <input name="ancho_sepalo" type="number" step="0.1" min="0.1" max="9.9" value="3.5" required>
+            <small class="rango" data-rango="ancho_sepalo"></small>
+          </label>
+          <label>Largo del pétalo (cm)
+            <input name="largo_petalo" type="number" step="0.1" min="0.1" max="9.9" value="1.4" required>
+            <small class="rango" data-rango="largo_petalo"></small>
+          </label>
+          <label>Ancho del pétalo (cm)
+            <input name="ancho_petalo" type="number" step="0.1" min="0.1" max="9.9" value="0.2" required>
+            <small class="rango" data-rango="ancho_petalo"></small>
+          </label>
+        </div>
+        <button class="primario" type="submit" id="btn-clasificar">Clasificar</button>
+      </form>
+    </section>
+
+    <!-- ===================== Resultado ===================== -->
+    <section class="tarjeta" aria-live="polite">
+      <h2>Resultado</h2>
+      <div id="resultado" class="vacio">Llena los datos y pulsa <b>Clasificar</b>, o elige un ejemplo.</div>
+      <div id="probabilidades" class="barras"></div>
+    </section>
+
+    <!-- ===================== Métricas por clase ===================== -->
+    <section class="tarjeta">
+      <h2>Métricas por clase</h2>
+      <p class="nota" id="algoritmo"></p>
+      <div class="tabla-envoltura">
+        <table id="tabla-metricas">
+          <thead><tr><th>Clase</th><th>Precisión</th><th>Recall</th><th>F1</th><th>Soporte</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== Matriz de confusión ===================== -->
+    <section class="tarjeta">
+      <h2>Matriz de confusión</h2>
+      <p class="nota">Filas: clase real · Columnas: clase predicha (conjunto de prueba)</p>
+      <div id="matriz" class="matriz"></div>
+    </section>
+
+    <!-- ===================== Historial ===================== -->
+    <section class="tarjeta ancha">
+      <div class="tarjeta-cab">
+        <h2>Historial de esta sesión</h2>
+        <button type="button" class="chip" id="btn-limpiar">Limpiar</button>
+      </div>
+      <div class="tabla-envoltura">
+        <table id="tabla-historial">
+          <thead><tr><th>Hora</th><th>Sépalo (L × A)</th><th>Pétalo (L × A)</th><th>Clase</th><th>Confianza</th><th>Tiempo</th></tr></thead>
+          <tbody><tr class="sin-datos"><td colspan="6">Aún no hay predicciones.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">ClasificaIA · Cómputo en la Nube · API: <a href="/docs">/docs</a> · <a href="/metrics">/metrics</a> · <a href="/health">/health</a></footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
